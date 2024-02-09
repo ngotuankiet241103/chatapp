@@ -1,0 +1,40 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: chat_app
+  mail:
+    host: smtp.gmail.com
+    port: 25
+    username: ngotuankiet12347@gmail.com
+    password: iqen aszq byda byug
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  aop:
+    proxy-target-class=true:
+  accessExpiration: 1500000
+  refreshExpiration: 604800000
+  #  # Other properties
+#  spring.mail.properties.mail.debug=true
+#  spring.mail.properties.mail.transport.protocol=smtp
+#  spring.mail.properties.mail.smtp.auth=true
+#  spring.mail.properties.mail.smtp.connectiontimeout=5000
+#  spring.mail.properties.mail.smtp.timeout=5000
+#  spring.mail.properties.mail.smtp.writetimeout=5000
+
+  # TLS , port 587
+#  spring.mail.properties.mail.smtp.starttls.enable=true
+
+  # SSL, post 465
+  #spring.mail.properties.mail.smtp.socketFactory.port = 465
+  #spring.mail.properties.mail.smtp.socketFactory.class = javax.net.ssl.SSLSocketFactory
+server:
+  port: 8088
+

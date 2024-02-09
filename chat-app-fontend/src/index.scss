@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    body{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        height: 100%;
+    }
+}
+@layer components {
+
+    .avatar-user:hover .feature-user{
+       display: block;
+    }
+    .message-item.active{
+        @apply bg-primary;
+    }
+    .sub-menu::after{
+        @apply bg-transparent;
+        position: absolute;
+        content: "";
+        bottom: -30px;
+        left: 0;
+        width: 200px;
+        height: 20px;
+        z-index: 99;
+        
+    }
+    .other-category.active > input[type="text"]{
+        display: block;
+    }
+    #pagination {
+        display: flex;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: center;
+        list-style: none;
+    }
+    
+    #pagination li {
+        font-size: 20px;
+        margin: 0px 14px;
+        cursor: pointer;
+    }
+    
+    #pagination li:hover {
+        color: rgb(102, 102, 238);
+    }
+    
+    .pageStart {
+        color: rgb(102, 102, 238);
+    }
+    .modal-comment {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #00000068;
+        display: none;
+        transition: 0.4s;
+    }
+    
+    .modal-comment.active {
+        display: block;
+    }
+    
+    .form-comment {
+        width: 30%;
+        background-color: #fff;
+        height: 100vh;
+        max-height: 100vh;
+        padding: 10px 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+    }
+    
+    .comment_time {
+        align-items: center;
+        display: flex;
+        margin-top: 8px;
+        min-height: 27px;
+        width: 140px;
+    }
+    
+    .comment_time button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-align: center;
+    }
+    
+    .comment_time button span {
+        color: #e87a5a;
+        font-size: 10px;
+        margin: 0 4px;
+    }
+    
+    .form-reply {
+        
+    }
+    .child-comment {
+        border-left: 1px solid red;
+        margin: 0 0 0 35px;
+        padding: 10px 0 0 16px;
+        width: calc(100% - 50px);
+    }
+    .oparation-form-reply {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+    
+    .oparation-form-reply button {
+
+        margin-left: 10px;
+        padding: 6px 12px;
+    }
+    
+    .userReply {
+        color: rgb(56, 205, 56);
+    }
+    .userReply span{
+        color: #000;
+    }
+    .show, .hidden {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .show.active {
+        display: none;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    .hidden.active {
+        display: block;
+    }
+    
+    .show span:first-child, .hidden span:first-child {
+        margin-right: 10px;
+    }
+    
+    .comment-item {
+        margin-bottom: 10px;
+    }
+    
+    .comment-item .child-comment {
+        display: none;
+    }
+    
+    .comment-item.active .child-comment {
+        display: block;
+    }
+    
+    .viewComment-reply {
+        margin: 10px 0px 20px 35px;
+        
+    }
+    
+    .header-close {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0px;
+    }
+    
+    .header-close i {
+        font-size: 28px;
+        font-weight: 600;
+    }
+    
+    .rootComment {
+        margin: 10px 0px 20px 0px;
+        
+    }
+    
+    .rootComment input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+    }
+}
+.ck-editor__editable {
+    height: 500px;
+    
+  }
+.form-reply .ck-editor__editable{
+    height:  120px;
+}
