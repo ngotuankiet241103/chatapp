@@ -26,10 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,8 +99,11 @@ public class BlogServiceImpl implements BlogService {
                     .tagId(tags.stream().map(Tag::getId).collect(Collectors.toList()))
                     .userId(userId)
                     .build();
+
         blogRepository.save(blog);
         blogRedisService.clear();
+        System.out.println(blog.getCreatedDate());
+        System.out.println(blog.getModifiedDate());
         return "sucess";
     }
 
@@ -256,6 +258,20 @@ public class BlogServiceImpl implements BlogService {
         response.put("blogs",blogDTOS);
         response.put("message","get blog related success");
         response.put("status", HttpStatus.OK.toString());
+        return response;
+    }
+
+    @Override
+    public Map<String, ?> getBlogCreated() {
+        Map<String,Integer> response = new HashMap<>();
+        LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+        Date yesterday = Date.from(localDate.minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date tomorrow =  Date.from(localDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date previousMonth = Date.from(localDate.minusMonths(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        int totalDay = blogRepository.findByDate(yesterday,tomorrow).size();
+        int totayMonth = blogRepository.findByDate(previousMonth,tomorrow).size();
+        response.put("today", totalDay);
+        response.put("month", totayMonth);
         return response;
     }
 

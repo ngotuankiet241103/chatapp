@@ -14,6 +14,7 @@ import { useDarkModeContext } from 'contexts/DarkModeContext';
 import useDarkModeHook from 'hooks/useDarkModeHook';
 import FeatureUser from 'components/user/FeatureUser';
 import { ToastContainer } from 'react-toastify';
+import Loading from 'components/loading/Loading';
 
 const inititalMenu = [
     {
@@ -164,7 +165,7 @@ const Header = () => {
                 </div>
             </div>
 
-            <Suspense fallback={<h1>Loading....</h1>}>
+            <Suspense fallback={<Loading></Loading>}>
 
                 <Outlet></Outlet>
             </Suspense>

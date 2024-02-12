@@ -1,6 +1,7 @@
 package com.chatappbackend.chapappbackend.document;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,14 +14,15 @@ import java.util.Date;
 @Document
 @Getter
 @Setter
+@NoArgsConstructor
 
 public class BaseDocument {
     @CreatedDate
-    private Date createdDate;
+    protected Date createdDate;
     @CreatedBy
-    private String createdBy;
+    protected String createdBy;
     @LastModifiedDate
-    private Date modifiedDate;
+    protected Date modifiedDate;
     @LastModifiedBy
-    private String modifiedBy;
+    protected String modifiedBy;
 }

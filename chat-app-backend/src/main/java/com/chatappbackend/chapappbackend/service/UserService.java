@@ -34,4 +34,6 @@ public interface UserService {
     UserDTO findInfoByUser(long id);
 
     void updateStatusOffline(String emails);
+
+    Object getTotalUserRegisterToday() throws ParseException;
 }

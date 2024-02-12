@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,6 +44,7 @@ public class RegisterService {
     private CountDownLatch latch;
     private final SequenceGeneratorService generatorService;
     public AuthenticationResponse register(RegisterRequest request) throws ParseException {
+
 //        boolean isValidEmail = emailValidator.
 //                test(request.getEmail());
 //
@@ -79,6 +81,8 @@ public class RegisterService {
                 .roleId(role_user.getId())
                     .build();
         // Sign up user
+        user.setCreatedDate(new Date());
+        user.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
         userService.signUpUser(user, token);
         // Create a CountDownLatch with a count of 1
         latch = new CountDownLatch(1);

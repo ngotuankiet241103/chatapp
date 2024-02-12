@@ -21,11 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -172,5 +171,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateStatusOffline(String emails) {
         userRepository.updateStatus(emails, Status.OFFLINE);
+    }
+
+    @Override
+    public Object getTotalUserRegisterToday() throws ParseException {
+        Map<String,Integer> response = new HashMap<>();
+        LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+        Date yesterday = Date.from(localDate.minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date tomorrow =  Date.from(localDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date previousMonth = Date.from(localDate.minusMonths(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        int totalDay = userRepository.findByDate(yesterday,tomorrow).size();
+        int totayMonth = userRepository.findByDate(previousMonth,tomorrow).size();
+        response.put("today", totalDay);
+        response.put("month", totayMonth);
+        return response;
     }
 }

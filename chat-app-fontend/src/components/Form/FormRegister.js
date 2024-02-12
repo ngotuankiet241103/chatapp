@@ -45,6 +45,7 @@ const FormRegister = () => {
             return;
 
         }
+        
         if (isValid) {
             const date = form.querySelector('input[name="date"]').value || "24/11/2003"
             console.log(date);
@@ -95,7 +96,7 @@ const FormRegister = () => {
     }, [])
     const handleCloseToast = () => {
         setLocalIsSubmitting(false);
-        nevigate("/home")
+       
 
     };
     return (

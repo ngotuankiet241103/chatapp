@@ -35,4 +35,6 @@ public interface BlogService {
     String updateBlog(BlogRequest blogRequest, long id);
 
     Map<String,Object> findBlogRelatedByCategoryCode(String categoryCode);
+
+    Map<String,?> getBlogCreated();
 }

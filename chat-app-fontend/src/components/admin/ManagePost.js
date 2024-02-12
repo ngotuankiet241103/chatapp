@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BlogList from './BlogList';
 import { ToastContainer } from 'react-toastify';
+import { pagination } from 'components/helper/pagination';
 
 
 const ManagePost = () => {
     const redirect = useNavigate();
     const { status } = useParams("status")
-    const [blogs, setBlogs] = useState([])
+    const [data, setData] = useState("")
+    const [nextPage,setNextPage] = useState(1);
     const handleAddPost = (e) => {
         redirect("/manage/add-post")
     }
@@ -17,10 +19,11 @@ const ManagePost = () => {
         try {
             const blogStatus = status.toUpperCase()
             console.log(status);
-            const response = await requestApi(`/blogs/${blogStatus}`, "GET")
+            const response = await requestApi(`/blogs/${blogStatus}?page=${nextPage}&limit=3`, "GET")
             console.log(response.data.blogs);
             if (response.status === 200) {
-                setBlogs(response.data.blogs)
+                console.log(response.data);
+                setData(response.data)
             }
         } catch (error) {
 
@@ -31,7 +34,29 @@ const ManagePost = () => {
         if (status) {
             getPosts()
         }
-    }, [status])
+    }, [status,nextPage])
+    useEffect(() => {
+        if (data.pagination) {
+
+            pagination({
+                page: "#pagination",
+                pageItem: "page-item",
+                pageIcon: "page-icon",
+                totalPage: data.pagination.totalsPage,
+                startPage: data.pagination.pageStart,
+                visiblePages: Math.floor(data.pagination.totalsPage / 3),
+                onPageClick: function (page) {
+                    setNextPage(page)
+                },
+                handleNextPage: function () {
+                    this.onPageClick(this.startPage + 1);
+                },
+                handlePrevPage: function () {
+                    this.onPageClick(this.startPage - 1);
+                }
+            });
+        }
+    }, [data.pagination])
     return (
         <>
             <div className='w-[1000px]'>
@@ -41,9 +66,11 @@ const ManagePost = () => {
 
                 </div>
                 <div>
-                    <BlogList blogs={blogs}></BlogList>
+                    {data.blogs && <BlogList blogs={data.blogs}></BlogList>}
                 </div>
+                <ul id='pagination'></ul>
             </div>
+            
             <ToastContainer/>
         </>
     );

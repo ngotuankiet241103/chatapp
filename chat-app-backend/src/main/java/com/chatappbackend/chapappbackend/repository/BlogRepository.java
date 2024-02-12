@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,4 +34,6 @@ public interface BlogRepository extends MongoRepository<Blog,Long> {
     Page<Blog> findAllByUserIdAndStatus(long userId, BlogStatus blogStatus, Pageable pageable);
     @Query("{ $and: [ { 'categoryId' : ?0 },{ 'status' : ?1} ] }")
     Page<Blog> findAllByCategoryId(Pageable pageable, long id, BlogStatus blogStatus);
+    @Query("{ $and: [ { 'createdDate' : { $gt: ?0 } }, { 'createdDate' : { $lt: ?1 } }] }")
+    List<Blog> findByDate(Date yesterday, Date tomorrow);
 }

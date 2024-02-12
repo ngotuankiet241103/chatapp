@@ -1,20 +1,21 @@
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 
-import { lazy } from 'react';
+import { lazy, useEffect, useLayoutEffect } from 'react';
 
 import { DarkModeProvider } from 'contexts/DarkModeContext';
 
 import 'react-toastify/dist/ReactToastify.css';
 import FormRegister from 'components/Form/FormRegister';
 import FormLogin from 'components/Form/FormLogin';
-const AdminPage = lazy(() =>  import('pages/AdminPage'));
+import Loading from 'components/loading/Loading';
+const AdminPage = lazy(() => import('pages/AdminPage'));
 const HomePage = lazy(() => import('pages/HomePage'));
 const BlogAddPage = lazy(() => import('pages/BlogAddPage'));
 const BlogEdit = lazy(() => import('components/Blog/BlogEdit'));
 const Header = lazy(() => import('./layouts/web/Header'));
-const MyBlogPage = lazy(() => import('pages/MyBlogPage') );
+const MyBlogPage = lazy(() => import('pages/MyBlogPage'));
 const FrameAdminPage = lazy(() => import('components/admin/FrameAdminPage'));
 const DetailsBlog = lazy(() => import('components/admin/DetailsBlog'));
 const BlogPage = lazy(() => import('pages/BlogPage'));
@@ -32,6 +33,9 @@ function App() {
     <div className='h-[100vh]'>
       <DarkModeProvider>
         <Routes>
+          <Route  path="/" element={<Redirect></Redirect>}>
+            
+          </Route>
           <Route path='/' element={<Header></Header>}>
             <Route path='/home' element={<HomePage></HomePage>}></Route>
             <Route path='/blog' element={<BlogPage></BlogPage>}></Route>
@@ -49,8 +53,11 @@ function App() {
             <Route path='/chat' element={<ChatPage></ChatPage>}></Route>
             <Route path='/my-blog/:statusBlog' element={<MyBlogPage></MyBlogPage>}></Route>
           </Route>
+          <Route path='/manage' element={<Redirect to="/manage/dashboard"></Redirect>}/>
+            
+          
           <Route path='/manage' element={<FrameAdminPage></FrameAdminPage>}>
-            <Route path='/manage' element={<AdminPage></AdminPage>}></Route>
+            <Route path='/manage/dashboard' element={<AdminPage></AdminPage>}></Route>
 
             <Route path='/manage/blogs' element={<ManagePost></ManagePost>}></Route>
             <Route path='/manage/blogs/:status' element={<ManagePost></ManagePost>}></Route>
@@ -58,10 +65,21 @@ function App() {
           <Route path='/manage/blog/detail/:blogId' element={<DetailsBlog></DetailsBlog>}></Route>
           <Route path='/register' element={<FormRegister></FormRegister>}></Route>
           <Route path='/login' element={<FormLogin></FormLogin>}></Route>
+          <Route path='/loading' element={<Loading></Loading>}></Route>
         </Routes>
       </DarkModeProvider>
     </div>
   );
 }
-
+const Redirect = ({to}) => {
+  const redirect = useNavigate();
+  useLayoutEffect(() => {
+    redirect(to || "/home")
+  },[])
+  return (
+    <>
+      
+    </>
+  );
+}
 export default App;

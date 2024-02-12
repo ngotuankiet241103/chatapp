@@ -52,6 +52,12 @@ public class BlogController {
 
         return blogService.findAllByTopicCode(code,pageable,search);
     }
+    @GetMapping("/blogs/created")
+    public Map<String,?> getBlogCreated()  {
+
+
+        return blogService.getBlogCreated();
+    }
     @GetMapping("/blogs/tag/{tagCode}")
     public Map<String,?> getBlogsByTagCode(@PathVariable("tagCode") String code,
                                            @RequestParam(name = "search",defaultValue = "") String search,

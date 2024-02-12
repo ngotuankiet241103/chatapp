@@ -29,6 +29,11 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> findConnectedUsers() {
         return ResponseEntity.ok(userService.findConnectedUsers());
     }
+
+    @GetMapping("/users/register")
+    public ResponseEntity<?> getTotalRegisterToday() throws ParseException {
+        return ResponseEntity.ok(userService.getTotalUserRegisterToday());
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable("id") long id) {
         return ResponseEntity.ok(userService.findInfoByUser(id));
